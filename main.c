@@ -9,9 +9,11 @@
 
 #define N_THREADS		3
 
+
 mutex_t lock;
 
 void task_high() {
+	printf("high (before lock)\n");
 	mutex_lock(&lock);
 	printf("high\n");
 	mutex_unlock(&lock);
@@ -20,16 +22,18 @@ void task_high() {
 }
 
 void task_med() {
-	mutex_lock(&lock);
 	printf("med\n");
-	mutex_unlock(&lock);
 
+	sleep(2);
 	printf("end of med\n");
 }
 
 void task_low() {
-	mutex_lock(&lock);
 	printf("low\n");
+	mutex_lock(&lock);
+	
+	sleep(1);
+	printf("low goes on\n");
 	mutex_unlock(&lock);
 
 	printf("end of low\n");
